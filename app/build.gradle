@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+}
+android {
+    namespace 'com.zhycarge.webdavsharelite'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId 'com.zhycarge.webdavsharelite'
+        minSdk 16
+        targetSdk 28
+        versionCode 1
+        versionName '1.0'
+    }
+    lintOptions {
+        // 仅禁用“目标 SDK 版本过期”这一项检查
+        disable 'ExpiredTargetSdkVersion'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//    // ↓↓↓ 新增的 lint baseline ↓↓↓
+//    lint {
+//        baseline = file("lint-baseline.xml")
+//    }
+
+    // ↓↓↓ 签名独立成块 ↓↓↓
+    signingConfigs {
+        release {
+            storeFile file('webdav-123123.jks')
+            storePassword '123123'
+            keyAlias 'webdav'
+            keyPassword '123123'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+}
